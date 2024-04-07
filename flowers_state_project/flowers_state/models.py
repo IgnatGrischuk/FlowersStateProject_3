@@ -1,5 +1,5 @@
 from django.db import models
-from .models import CustomUser
+from users.models import CustomUser
 
 
 class Flower(models.Model):
