@@ -1,0 +1,215 @@
+Index: flowers_state_project/flowers_state_project/settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from datetime import timedelta\nfrom pathlib import Path\nimport environ\nimport os\n\nBASE_DIR = Path(__file__).resolve().parent.parent\n\nenv = environ.Env()\nenviron.Env.read_env(os.path.join(BASE_DIR, '.env'))\n\nSECRET_KEY = env('SECRET_KEY')\n\nDEBUG = True\n\nALLOWED_HOSTS = []\n\nAUTH_USER_MODEL = 'users.CustomUser'\n\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework',\n    'djoser',\n    'users',\n    'flowers_state',\n]\n\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\n\nROOT_URLCONF = 'flowers_state_project.urls'\n\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',\n                'django.contrib.auth.context_processors.auth',\n                'django.contrib.messages.context_processors.messages',\n            ],\n        },\n    },\n]\n\nWSGI_APPLICATION = 'flowers_state_project.wsgi.application'\n\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n        'NAME': env('DATABASE_NAME'),\n        'USER': env('DATABASE_USER'),\n        'PASSWORD': env('DATABASE_PASSWORD'),\n        'HOST': env('DATABASE_HOST'),\n        'PORT': env('DATABASE_PORT'),\n    }\n}\n\nAUTH_PASSWORD_VALIDATORS = [\n    {\n        'NAME': 'django.contrib.auth.password_validation'\n                '.UserAttributeSimilarityValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation'\n                '.MinimumLengthValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation'\n                '.CommonPasswordValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation'\n                '.NumericPasswordValidator',\n    },\n]\n\nSIMPLE_JWT = {\n    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),\n    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),\n    'ROTATE_REFRESH_TOKENS': False,\n    'BLACKLIST_AFTER_ROTATION': False,\n\n    'ALGORITHM': 'HS256',\n    'SIGNING_KEY': 'your_secret_key',\n    'VERIFYING_KEY': None,\n    'AUDIENCE': None,\n    'ISSUER': None,\n    'JWK_URL': None,\n    'LEEWAY': 0,\n\n    'AUTH_HEADER_TYPES': ('Bearer',),\n    'USER_ID_FIELD': 'id',\n    'USER_ID_CLAIM': 'user_id',\n\n    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),\n    'TOKEN_TYPE_CLAIM': 'token_type',\n\n    'JTI_CLAIM': 'jti',\n\n    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',\n    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),\n    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),\n}\n\nDJOSER = {\n    'PASSWORD_RESET_CONFIRM_URL': 'users/password/reset/confirm/{uid}/{token}',\n    'USERNAME_RESET_CONFIRM_URL': 'users/username/reset/confirm/{uid}/{token}',\n    'ACTIVATION_URL': 'users/activate/{uid}/{token}',\n    'SEND_ACTIVATION_EMAIL': True,\n    'SERIALIZERS': {},\n    'TOKEN_MODEL': None,\n}\n\nEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_HOST_USER = env('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_USE_SSL = False\n\nLANGUAGE_CODE = 'en-us'\n\nTIME_ZONE = 'UTC'\n\nUSE_I18N = True\n\nUSE_TZ = True\n\nSTATIC_URL = 'static/'\n\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nMEDIA_URL = '/media/'\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/flowers_state_project/flowers_state_project/settings.py b/flowers_state_project/flowers_state_project/settings.py
+--- a/flowers_state_project/flowers_state_project/settings.py	(revision 2c85e82d67cc72b0e27969c6a93e753eaeaade11)
++++ b/flowers_state_project/flowers_state_project/settings.py	(date 1712516168213)
+@@ -26,7 +26,6 @@
+     'rest_framework',
+     'djoser',
+     'users',
+-    'flowers_state',
+ ]
+ 
+ MIDDLEWARE = [
+Index: flowers_state_project/manage.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/usr/bin/env python\n\"\"\"Django's command-line utility for administrative tasks.\"\"\"\nimport os\nimport sys\n\n\ndef main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flowers_state_project.settings')\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"\n        ) from exc\n    execute_from_command_line(sys.argv)\n\n\nif __name__ == '__main__':\n    main()\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/flowers_state_project/manage.py b/flowers_state_project/manage.py
+--- a/flowers_state_project/manage.py	(revision 2c85e82d67cc72b0e27969c6a93e753eaeaade11)
++++ b/flowers_state_project/manage.py	(date 1712516143597)
+@@ -1,5 +1,3 @@
+-#!/usr/bin/env python
+-"""Django's command-line utility for administrative tasks."""
+ import os
+ import sys
+ 
+Index: .idea/FlowersStateProject_3.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/FlowersStateProject_3.iml b/.idea/FlowersStateProject_3.iml
+new file mode 100644
+--- /dev/null	(date 1712515584857)
++++ b/.idea/FlowersStateProject_3.iml	(date 1712515584857)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.venv" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1712515584669)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1712515584669)
+@@ -0,0 +1,21 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
++      <option name="ignoredErrors">
++        <list>
++          <option value="N813" />
++        </list>
++      </option>
++    </inspection_tool>
++    <inspection_tool class="PyShadowingNamesInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
++    <inspection_tool class="PyUnboundLocalVariableInspection" enabled="false" level="WARNING" enabled_by_default="false" />
++    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="ignoredIdentifiers">
++        <list>
++          <option value="django.db.models.fields.DateField.*" />
++        </list>
++      </option>
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+new file mode 100644
+--- /dev/null	(date 1712515584865)
++++ b/.idea/workspace.xml	(date 1712515584865)
+@@ -0,0 +1,46 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ChangeListManager">
++    <list default="true" id="68d87303-05f4-44fe-8bc5-0510258fae1e" name="Changes" comment="" />
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="ProjectColorInfo"><![CDATA[{
++  "associatedIndex": 2
++}]]></component>
++  <component name="ProjectId" id="2emhIhcxOf1YiAyuQbOg65W3X4D" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
++  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "master"
++  }
++}]]></component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
++      </set>
++    </attachedChunks>
++  </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="68d87303-05f4-44fe-8bc5-0510258fae1e" name="Changes" comment="" />
++      <created>1712515582286</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1712515582286</updated>
++    </task>
++    <servers />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1712515584861)
++++ b/.idea/modules.xml	(date 1712515584861)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/FlowersStateProject_3.iml" filepath="$PROJECT_DIR$/.idea/FlowersStateProject_3.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1712515584877)
++++ b/.idea/vcs.xml	(date 1712515584877)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1712515877297)
++++ b/.idea/misc.xml	(date 1712515877297)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Black">
++    <option name="sdkName" value="Python 3.10 (FlowersStateProject_3)" />
++  </component>
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (FlowersStateProject_3)" project-jdk-type="Python SDK" />
++</project>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+--- /dev/null	(date 1712515584877)
++++ b/.idea/inspectionProfiles/profiles_settings.xml	(date 1712515584877)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
