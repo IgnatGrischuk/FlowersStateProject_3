@@ -11,15 +11,15 @@ class Flower(models.Model):
         return f"{self.name}"
 
 
-class FlowersImage(models.Model):
+class FlowerImage(models.Model):
     flowers = models.ForeignKey(Flower, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product_images/')
+    image = models.ImageField(upload_to='flower_image/')
 
     def __str__(self):
         return f"Image {self.flowers}"
 
 
-class FlowersWatering(models.Model):
+class FlowerWatering(models.Model):
     watering_time = models.ForeignKey(Flower, on_delete=models.CASCADE)
 
     def __str__(self):
