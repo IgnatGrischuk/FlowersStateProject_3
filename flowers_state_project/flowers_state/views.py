@@ -4,20 +4,28 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import F
 
-from flowers_state.models import (Flower, FlowerFertilizer, FlowerWatering,
-                                  FlowerImage, FlowerAdvice)
+from flowers_state.models import (Flower, FlowerFertilizer,
+                                  FlowerWatering, FlowerAdvice)
 from flowers_state.serializers import (FlowerSerializer,
                                        FlowerFertilizerSerializer,
                                        FlowerWateringSerializer,
-                                       FlowerImageSerializer,
                                        FlowerAdviceSerializer)
+from flowers_state.tasks import some_task
+from drf_yasg.utils import swagger_auto_schema
 
 
 class FlowersListView(APIView):
     permission_classes = (AllowAny, )
 
+    @swagger_auto_schema(
+        request_method="Get",
+        responses={
+            "200": "FlowerSerializer",
+        }
+    )
     def get(self, request):
         queryset = Flower.objects.all()
+        print(some_task.delay().get())
         serializer = FlowerSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -66,11 +74,6 @@ class FlowerWateringView(APIView):
         input_serializer.save(user=user)
 
         return Response()
-
-
-class FlowerImageSet(APIView):
-    images = FlowerImageSerializer(many=True, source='flowerimage_set',
-                                   read_only=True)
 
 
 class FlowerAdviceView(APIView):
