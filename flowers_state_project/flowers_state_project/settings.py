@@ -27,8 +27,8 @@ INSTALLED_APPS = [
     'djoser',
     'users',
     'flowers_state',
-    'django_celery_beat',
     'celery',
+    'swagger',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +154,15 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'description': 'Personal API key',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    }
+}
