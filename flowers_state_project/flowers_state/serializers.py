@@ -30,7 +30,7 @@ class FlowerSerializer(serializers.ModelSerializer):
 
 class FlowerFertilizerSerializer(serializers.ModelSerializer):
     fertilizer_time = serializers.DateTimeField()
-    flowers = FlowerSerializer()
+    flower = FlowerSerializer()
 
     class Meta:
         model = FlowerFertilizer
@@ -47,7 +47,7 @@ class FlowerFertilizerSerializer(serializers.ModelSerializer):
 
 class FlowerWateringSerializer(serializers.ModelSerializer):
     watering_time = serializers.DateTimeField()
-    flowers = FlowerSerializer()
+    flower = FlowerSerializer()
 
     class Meta:
         model = FlowerWatering
@@ -71,7 +71,7 @@ class FlowerImageSerializer(serializers.ModelSerializer):
 
 
 class FlowerAdviceSerializer(serializers.ModelSerializer):
-    flowers = FlowerSerializer()
+    flower = FlowerSerializer()
 
     class Meta:
         model = FlowerAdvice

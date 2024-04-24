@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'users',
     'flowers_state',
     'celery',
-    'swagger',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
