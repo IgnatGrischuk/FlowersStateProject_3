@@ -23,7 +23,7 @@ class FlowerWatering(models.Model):
     watering_time = models.ForeignKey(Flower, on_delete=models.CASCADE)
 
     def __str__(self):
-        return (f"flowers: {self.watering_time}"
+        return (f"flower: {self.watering_time}"
                 f"time: {self.watering_time}\n")
 
 
